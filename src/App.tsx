@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
-type Story = { category: string; title: string; meta: string; image: string; tone: string }
+type Story = { category: string; title: string; meta: string; image: string; sourceUrl: string; tone: string }
 
 function App() {
   const [stories, setStories] = useState<Story[]>([])
@@ -15,12 +15,13 @@ function App() {
         if (!response.ok) throw new Error('A API ainda não está disponível.')
         return response.json()
       })
-      .then((items: Array<{ title: string; category: string; description: string; image_url: string }>) => {
+      .then((items: Array<{ title: string; category: string; description: string; image_url: string; source_url: string }>) => {
         setStories(items.map((item, index) => ({
           category: 'Arquivo editorial',
           title: item.title,
           meta: item.category,
           image: item.image_url,
+          sourceUrl: item.source_url,
           tone: ['ochre', 'ink', 'rose'][index % 3],
         })))
       })
@@ -33,7 +34,7 @@ function App() {
   return (
     <main>
       <nav className="nav shell" aria-label="Navegação principal">
-        <a className="brand" href="#top" aria-label="Ateliê aberto, início"><span className="brand-mark">A</span><span>Ateliê aberto</span></a>
+        <a className="brand" href="#top" aria-label="Ateliê aberto, início"><span className="brand-mark">A</span><span>Art&Design</span></a>
         <div className="nav-links"><a href="#explorar">Explorar</a><a href="#arquivo">Arquivo</a><a href="#sobre">Sobre o projeto</a></div>
         <button className="search-button" type="button" aria-label="Buscar no arquivo">Buscar <span aria-hidden="true">↗</span></button>
       </nav>
@@ -49,11 +50,11 @@ function App() {
         <div className="section-heading"><div><p className="eyebrow">Seleção editorial</p><h2>Do arquivo para a conversa</h2></div><div className="filters" aria-label="Filtrar conteúdo">{['Tudo', 'Arte', 'Moda'].map((filter) => <button className={activeFilter === filter ? 'filter active' : 'filter'} key={filter} onClick={() => setActiveFilter(filter)} type="button">{filter}</button>)}</div></div>
         {loading && <p className="data-message">Carregando o acervo...</p>}
         {error && <p className="data-message">{error} Execute a API com <code>uvicorn api:app --reload</code>.</p>}
-        {!loading && !error && <div className="story-grid">{visibleStories.map((story, index) => <article className={`story-card ${story.tone} ${index === 0 ? 'featured' : ''}`} key={story.title}><div className="story-image"><img src={story.image} alt="" /></div><div className="story-body"><p className="card-category">{story.category}</p><h3>{story.title}</h3><p className="card-meta">{story.meta}</p></div></article>)}</div>}
+        {!loading && !error && <div className="story-grid">{visibleStories.map((story, index) => <article className={`story-card ${story.tone} ${index === 0 ? 'featured' : ''}`} key={story.title}><div className="story-image"><img src={story.image} alt="" onError={(event) => { event.currentTarget.style.display = 'none' }} /></div><div className="story-body"><p className="card-category">{story.category}</p><h3>{story.title}</h3><p className="card-meta">{story.meta}</p><a className="article-link" href={story.sourceUrl} target="_blank" rel="noreferrer">Ler matéria <span aria-hidden="true">↗</span></a></div></article>)}</div>}
       </section>
 
-      <section className="manifesto shell" id="sobre"><p className="section-index">02 / O projeto</p><div><p className="manifesto-quote">“A roupa é uma forma de dizer quem somos sem precisar falar.”</p><p className="manifesto-note">Este espaço começa como uma pesquisa aberta. Os dados do acervo serão coletados, tratados e documentados antes de chegar aqui.</p></div></section>
-      <footer className="footer shell"><span>Ateliê aberto © 2026</span><span>Pesquisa em andamento</span><a href="#top">Voltar ao topo ↑</a></footer>
+      <section className="manifesto shell" id="sobre"><p className="section-index">02 / O projeto</p><div><p className="manifesto-quote">“A arte é o sussurro da alma em cores, formas e melodias que o tempo jamais apaga.”</p><p className="manifesto-note">Este projeto busca integrar a história da moda com a arte e a cultura visual.</p></div></section>
+      <footer className="footer shell"><span>Art&Design © 2026</span><span>Art&Design</span><a href="#top">Voltar ao topo ↑</a></footer>
     </main>
   )
 }

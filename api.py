@@ -12,6 +12,8 @@ from database.models import ArchiveItem
 load_dotenv()
 DATA_FILES = [
     Path(__file__).parent / os.getenv("ART_OUTPUT_FILE", "data/raw/dailyart_art.json"),
+    Path(__file__).parent / os.getenv("ART_NEWSPAPER_OUTPUT_FILE", "data/raw/art_newspaper.json"),
+    Path(__file__).parent / os.getenv("GOOGLE_ARTS_OUTPUT_FILE", "data/raw/google_arts.json"),
     Path(__file__).parent / os.getenv("FASHION_OUTPUT_FILE", "data/raw/vogue_moda.json"),
 ]
 

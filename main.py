@@ -5,7 +5,9 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from scrapers.art_scraper import ArtScraper
+from scrapers.art_newspaper_scraper import ArtNewspaperScraper
 from scrapers.fashion_scraper import FashionScraper
+from scrapers.google_arts_scraper import GoogleArtsScraper
 from utils.logger import configure_logging
 
 
@@ -15,6 +17,8 @@ def main() -> None:
     timeout = int(os.getenv("REQUEST_TIMEOUT", "15"))
     sources = (
         ("arte", ArtScraper, os.getenv("ART_SOURCE_URL", "https://www.dailyartmagazine.com/"), os.getenv("ART_OUTPUT_FILE", "data/raw/dailyart_art.json")),
+        ("arte", ArtNewspaperScraper, os.getenv("THE_ART_NEWSPAPER_URL", "https://www.theartnewspaper.com/"), os.getenv("ART_NEWSPAPER_OUTPUT_FILE", "data/raw/art_newspaper.json")),
+        ("arte", GoogleArtsScraper, os.getenv("GOOGLE_ARTS_URL", "https://artsandculture.google.com/"), os.getenv("GOOGLE_ARTS_OUTPUT_FILE", "data/raw/google_arts.json")),
         ("moda", FashionScraper, os.getenv("FASHION_SOURCE_URL", "https://vogue.globo.com/moda/"), os.getenv("FASHION_OUTPUT_FILE", "data/raw/vogue_moda.json")),
     )
 

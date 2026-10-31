@@ -9,4 +9,5 @@ class ArchiveItem(BaseModel):
     description: str = ""
     image_url: HttpUrl | None = None
     source_url: HttpUrl | None = None
+    source_name: str = ""
     collected_at: datetime | None = None

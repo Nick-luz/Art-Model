@@ -26,6 +26,7 @@ class FashionScraper(BaseScraper):
                     "image_url": self._image_url(image),
                     "source_url": urljoin(self.base_url + "/", title_link.get("href", "")),
                     "category": "Moda",
+                    "source_name": "Vogue Brasil",
                 }
             )
 

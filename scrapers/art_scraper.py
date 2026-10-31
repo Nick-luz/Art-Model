@@ -27,6 +27,7 @@ class ArtScraper(BaseScraper):
                     "image_url": image_url,
                     "source_url": urljoin(self.base_url + "/", title_link.get("href", "")),
                     "category": "Arte",
+                    "source_name": "DailyArt Magazine",
                 }
             )
 
